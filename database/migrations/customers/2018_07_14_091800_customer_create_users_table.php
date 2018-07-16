@@ -19,7 +19,9 @@ class CustomerCreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamp('createdAt')->nullable();
+            $table->timestamp('updatedAt')->nullable();
+            $table->timestamp('deletedAt')->nullable();
         });
     }
 

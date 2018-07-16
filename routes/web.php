@@ -7,8 +7,7 @@ Route::get('customers', function () {
     return Customer::all();
 });*/
 
-Route::group(['middleware' => 'tenancy.enforce'], function () 
-{
+
     Auth::routes();
     Route::get('/', function()
 {
@@ -24,6 +23,12 @@ Route::get('customers/{database}','SystemController@getTenantData');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('websites', 'SystemController@getWebsiteData');
 Route::get('deletecustomers/{database}/{id}','SystemController@deleteTenantData');
-Route::get('customers/{database}/{id}','SystemController@getSpecificTenantData');
-});
+Route::get('customers/{database}/{id}','SystemController@getSpecificCustomerData');
+Route::get('getCustomersByPosts/{database}/{id}','SystemController@getUserByPost');
+
+Route::get('createUser/{database}/{name}/{email}/{password}','SystemController@createCustomers');
+
+Route::get('posts/{database}','SystemController@getPostData');
+
+Route::get('deleteposts/{database}/{id}','SystemController@deletePosts');
 

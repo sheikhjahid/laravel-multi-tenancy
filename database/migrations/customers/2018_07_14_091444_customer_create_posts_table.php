@@ -18,7 +18,9 @@ class CustomerCreatePostsTable extends Migration
           $table->unsignedInteger('user_id');
           $table->string('name');
           $table->text('body');
-          $table->timestamps();
+          $table->timestamp('createdAt')->nullable();
+          $table->timestamp('updatedAt')->nullable();
+          $table->timestamp('deletedAt')->nullable();
       });
     }
 
