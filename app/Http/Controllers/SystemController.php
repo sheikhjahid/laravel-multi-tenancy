@@ -116,4 +116,73 @@ class SystemController extends Controller
             return "Cannot delete post as it is assoiciated with a particular user.Please delete the associated user to delete this post";
         }
     }
+
+    public function getPostById($database, $id)
+    {
+        Config::set('database.connections.tenant.database',$database);
+
+        return Post::find($id);
+    }
+
+    public function createPosts($database, Request $request)
+    {
+        Config::set('database.connections.tenant.database',$database);
+
+        $createPost = Post::create([
+
+            'user_id' => $request->user_id,
+            'name' => $request->name,
+            'body' => $request->body,
+
+        ]);
+        if($createPost==true)
+        {
+            return "Post created!!";
+        }
+        else
+        {
+            return "Unable to create posts";
+        }
+    }
+
+    public function updateUsers($database, $id, Request $request)
+    {
+        Config::set('database.connections.tenant.database',$database);
+
+        $updateUser = User::find($id)->update([
+
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+
+        ]);
+        if($updateUser==true)
+        {
+            return "User updated";
+        }
+        else
+        {
+            return "Unable to update";
+        }
+    }
+
+    public function updatePosts($database, $id, Request $request)
+    {
+        Config::set('database.connections.tenant.database',$database);
+
+        $updatePosts = Post::find($id)->update([
+
+            'name' => $request->name,
+            'body'=> $request->body 
+
+        ]);
+        if($updatePosts==true)
+        {
+            return "Post Updated";
+        }
+        else
+        {
+            return "Unable to update";
+        }
+    }
 }

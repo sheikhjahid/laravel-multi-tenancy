@@ -32,3 +32,11 @@ Route::get('posts/{database}','SystemController@getPostData');
 
 Route::get('deleteposts/{database}/{id}','SystemController@deletePosts');
 
+Route::get('posts/{database}/{id}','SystemController@getPostById');
+
+Route::get('createPosts/{database}/{user_id}/{name}/{body}', 'SystemController@createPosts');
+
+Route::get('updateUsers/{database}/{id}/{name}/{email}/{password}','SystemController@updateUsers');
+
+Route::get('updatePosts/{database}/{id}/{name}/{body}','SystemController@updatePosts');
+

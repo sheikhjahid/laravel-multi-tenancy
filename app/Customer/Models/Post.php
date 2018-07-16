@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Post extends Model
 {
 
+	protected $fillable = ['user_id','name','body'];
+
 	use SoftDeletes;
 
 	const CREATED_AT = "createdAt";
