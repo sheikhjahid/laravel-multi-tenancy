@@ -31,8 +31,6 @@ class SystemController extends Controller
     public function getTenantData($database)
     {
        
-    	 Config::set('database.connections.tenant.database',$database);
-       
          return User::with('posts')->get();
        
     } 
@@ -40,8 +38,6 @@ class SystemController extends Controller
     public function deleteTenantData($database, $id)
     {
         
-        
-         Config::set('database.connections.tenant.database',$database);
          $deleteData = User::find($id)->delete();
          if($deleteData==1)
          {
@@ -58,8 +54,6 @@ class SystemController extends Controller
     public function getSpecificCustomerData($database, $id)
     {
       
-           Config::set('database.connections.tenant.database',$database);
-           
            $getUserData = User::find($id);
            return $getUserData;
 
@@ -67,7 +61,6 @@ class SystemController extends Controller
 
     public function getUserByPost($database, $id)
     {
-        Config::set('database.connections.tenant.database',$database);
 
         $getPostData = Post::find($id);
         
@@ -83,8 +76,6 @@ class SystemController extends Controller
     {
         $data = [$request->name, $request->email, $request->password];
 
-        Config::set('database.connections.tenant.database',$database);
-
         User::create([
 
             'name' => $request->name,
@@ -98,14 +89,12 @@ class SystemController extends Controller
 
     public function getPostData($database)
     {
-        Config::set('database.connections.tenant.database',$database);
         return Post::all();
     }
 
     public function deletePosts($database, $id)
     {
-        Config::set('database.connections.tenant.database',$database);
-
+        
         $deletePosts = Post::find($id)->delete();
         if($deletePosts===1)
         {
@@ -119,14 +108,12 @@ class SystemController extends Controller
 
     public function getPostById($database, $id)
     {
-        Config::set('database.connections.tenant.database',$database);
-
+       
         return Post::find($id);
     }
 
     public function createPosts($database, Request $request)
     {
-        Config::set('database.connections.tenant.database',$database);
 
         $createPost = Post::create([
 
@@ -147,7 +134,6 @@ class SystemController extends Controller
 
     public function updateUsers($database, $id, Request $request)
     {
-        Config::set('database.connections.tenant.database',$database);
 
         $updateUser = User::find($id)->update([
 
@@ -168,8 +154,7 @@ class SystemController extends Controller
 
     public function updatePosts($database, $id, Request $request)
     {
-        Config::set('database.connections.tenant.database',$database);
-
+        
         $updatePosts = Post::find($id)->update([
 
             'name' => $request->name,
