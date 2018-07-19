@@ -777,16 +777,16 @@
         },
         {
             "name": "hyn/multi-tenant",
-            "version": "5.2.4",
+            "version": "5.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyn/multi-tenant.git",
-                "reference": "fcc9b75ad6cb60f0d166264e0055b64e7c42d6c8"
+                "reference": "59fcda0fc69b13746d767cfc6f12adc0ef303ac8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyn/multi-tenant/zipball/fcc9b75ad6cb60f0d166264e0055b64e7c42d6c8",
-                "reference": "fcc9b75ad6cb60f0d166264e0055b64e7c42d6c8",
+                "url": "https://api.github.com/repos/hyn/multi-tenant/zipball/59fcda0fc69b13746d767cfc6f12adc0ef303ac8",
+                "reference": "59fcda0fc69b13746d767cfc6f12adc0ef303ac8",
                 "shasum": ""
             },
             "require": {
@@ -839,7 +839,7 @@
                 "saas",
                 "tenancy"
             ],
-            "time": "2018-07-12 09:11:17"
+            "time": "2018-07-19 09:49:57"
         },
         {
             "name": "jakub-onderka/php-console-color",

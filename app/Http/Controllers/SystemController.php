@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\Customer\Models\User;
 use App\Customer\Models\Post;
 use App\System\Models\User as SystemUser;
 use App\System\Models\Website as SystemWebsite;
 use DB;
-use Config;
 use Hash;
+
+use Hyn\Tenancy\Models\Hostname;
+use Hyn\Tenancy\Contracts\Repositories\HostnameRepository;
+use Hyn\Tenancy\Models\Website;
+use Hyn\Tenancy\Contracts\Repositories\WebsiteRepository;
 
 class SystemController extends Controller
 {
@@ -72,11 +77,10 @@ class SystemController extends Controller
        
     }
 
-    public function createCustomers($database, Request $request)
+    public function createCustomers($database, UserRequest $request)
     {
-        $data = [$request->name, $request->email, $request->password];
-
-        User::create([
+        
+        return User::create([
 
             'name' => $request->name,
             'email' => $request->email,
@@ -84,7 +88,6 @@ class SystemController extends Controller
 
         ]);
 
-        return "User Created!!";
     }
 
     public function getPostData($database)
@@ -170,4 +173,6 @@ class SystemController extends Controller
             return "Unable to update";
         }
     }
+
+
 }

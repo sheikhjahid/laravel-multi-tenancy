@@ -4,28 +4,28 @@ use App\System\Models\User as SystemUser;
 
 
     Auth::routes();
-    Route::get('/', function()
-{
-	return view('welcome');
-});
-Route::get('all-users', function () {
-    return User::all();
-});
-Route::get('users','SystemController@getUserData');
-Route::get('users/{id}','SystemController@getUserById');
-Route::get('websites', 'SystemController@getWebsiteData');
+	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/', function()
+	{
+		return view('welcome');
+	});
+	Route::get('all-users', function () {
+		return User::all();
+	});
+	Route::get('users','SystemController@getUserData');
+	Route::get('users/{id}','SystemController@getUserById');
+	Route::get('websites', 'SystemController@getWebsiteData');
 
-Route::group(['middleware'=>'tenant_database'], function()
-{
 
+Route::group(['middleware' => 'tenant_database_name'], function()
+{
 	Route::get('customers/{database}','SystemController@getTenantData');
 
-	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('deletecustomers/{database}/{id}','SystemController@deleteTenantData');
 	Route::get('customers/{database}/{id}','SystemController@getSpecificCustomerData');
 	Route::get('getCustomersByPosts/{database}/{id}','SystemController@getUserByPost');
 
-	Route::get('createUser/{database}/{name}/{email}/{password}','SystemController@createCustomers');
+	Route::post('createUser/{database}','SystemController@createCustomers');
 
 	Route::get('posts/{database}','SystemController@getPostData');
 
@@ -33,13 +33,11 @@ Route::group(['middleware'=>'tenant_database'], function()
 
 	Route::get('posts/{database}/{id}','SystemController@getPostById');
 
-	Route::get('createPosts/{database}/{user_id}/{name}/{body}', 'SystemController@createPosts');
+	Route::post('createPosts/{database}', 'SystemController@createPosts');
 
-	Route::get('updateUsers/{database}/{id}/{name}/{email}/{password}','SystemController@updateUsers');
+	Route::post('updateUsers/{database}/{id}','SystemController@updateUsers');
 
-	Route::get('updatePosts/{database}/{id}/{name}/{body}','SystemController@updatePosts');
-
-
-});
+	Route::post('updatePosts/{database}/{id}','SystemController@updatePosts');
 
 
+});	
