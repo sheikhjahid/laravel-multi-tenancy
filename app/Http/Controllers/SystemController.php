@@ -4,175 +4,83 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use App\Contracts\UserInterface;
+use App\Contracts\PostInterface;
 use App\Customer\Models\User;
-use App\Customer\Models\Post;
-use App\System\Models\User as SystemUser;
-use App\System\Models\Website as SystemWebsite;
-use DB;
 use Hash;
-
-use Hyn\Tenancy\Models\Hostname;
-use Hyn\Tenancy\Contracts\Repositories\HostnameRepository;
-use Hyn\Tenancy\Models\Website;
-use Hyn\Tenancy\Contracts\Repositories\WebsiteRepository;
-
 class SystemController extends Controller
 {
-    public function getUserData()
+    public $userInterface;
+    public $postInterface;
+
+    public function __construct(UserInterface $userInterface, PostInterface $postInterface)
     {
-    	return SystemUser::all();
+        $this->userInterface = $userInterface;
+        $this->postInterface = $postInterface;
     }
 
-    public function getUserById($id)
+    public function getUserData($database)
     {
-    	return SystemUser::find($id);
+    	return $this->userInterface->getAllUsers();
     }
 
-    public function getWebsiteData()
+    public function getUserById($database, $id)
     {
-       return SystemWebsite::getWebsiteData();
+    	return $this->userInterface->getUserById($id);
     }
 
-    public function getTenantData($database)
+     public function createCustomers(Request $request)
     {
-       
-         return User::with('posts')->get();
-       
-    } 
-
-    public function deleteTenantData($database, $id)
-    {
-        
-         $deleteData = User::find($id)->delete();
-         if($deleteData==1)
-         {
-            return "deleted Tenant";
-         }
-         else
-         {
-            return "Unable to delete tenant!!";
-         }
-       
-        
-    }
-
-    public function getSpecificCustomerData($database, $id)
-    {
-      
-           $getUserData = User::find($id);
-           return $getUserData;
-
-    }
-
-    public function getUserByPost($database, $id)
-    {
-
-        $getPostData = Post::find($id);
-        
-        $getUserId = $getPostData->user_id;
-        
-        $getUserData = User::find($getUserId);
-
-        return $getUserData;
-       
-    }
-
-    public function createCustomers($database, UserRequest $request)
-    {
-        
-        return User::create([
-
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password) 
-
+    
+        $createUser = User::create([
+            'name'=>'test',
+            'email'=>'test@itobuz.com',
+            'password'=>Hash::make('123456')
         ]);
-
-    }
-
-    public function getPostData($database)
-    {
-        return Post::all();
-    }
-
-    public function deletePosts($database, $id)
-    {
-        
-        $deletePosts = Post::find($id)->delete();
-        if($deletePosts===1)
+        if($createUser)
         {
-            return "Post has been deleted";
+            return "User created!!";
         }
         else
         {
-            return "Cannot delete post as it is assoiciated with a particular user.Please delete the associated user to delete this post";
+            return "Unable to create User!!";
         }
     }
 
-    public function getPostById($database, $id)
+    public function updateCustomers($database, $id, UserRequest $request)
     {
-       
-        return Post::find($id);
-    }
-
-    public function createPosts($database, Request $request)
-    {
-
-        $createPost = Post::create([
-
-            'user_id' => $request->user_id,
-            'name' => $request->name,
-            'body' => $request->body,
-
-        ]);
-        if($createPost==true)
+        $updateUser = $this->userInterface->updateUsers($id, $request);
+        if($updateUser==1)
         {
-            return "Post created!!";
+            return "User updated!!";
         }
         else
         {
-            return "Unable to create posts";
+            return "Unable to update user!!";
         }
     }
 
-    public function updateUsers($database, $id, Request $request)
+    public function deleteCustomers($database, $id)
     {
-
-        $updateUser = User::find($id)->update([
-
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-
-        ]);
-        if($updateUser==true)
+        $deleteUser = $this->userInterface->deleteUsers($id);
+        if($deleteUser==1)
         {
-            return "User updated";
+            return "User deleted!!";
         }
         else
         {
-            return "Unable to update";
+            return "Unable to delete user!!";
         }
     }
 
-    public function updatePosts($database, $id, Request $request)
+    public function getAllPosts($database)
     {
-        
-        $updatePosts = Post::find($id)->update([
-
-            'name' => $request->name,
-            'body'=> $request->body 
-
-        ]);
-        if($updatePosts==true)
-        {
-            return "Post Updated";
-        }
-        else
-        {
-            return "Unable to update";
-        }
+        return $this->postInterface->getAllPosts();
     }
 
+    public function getPostsById($id, $database)
+    {
+        return $this->postInterface->getPostDataById($id);
+    }
 
 }

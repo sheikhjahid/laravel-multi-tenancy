@@ -10,10 +10,6 @@ class Post extends Model
 
 	use SoftDeletes;
 
-	const CREATED_AT = "createdAt";
-	const UPDATED_AT = "updatedAt";
-	const DELETED_AT = "deletedAt";
-
     use UsesTenantConnection;
     public function user()
     {

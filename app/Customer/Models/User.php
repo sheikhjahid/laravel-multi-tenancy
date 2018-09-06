@@ -9,11 +9,6 @@ class User extends Shared
 	use SoftDeletes;
 
     use UsesTenantConnection;
-    //protected $with = ['posts'];
-   
-    const CREATED_AT = "createdAt";
-    const UPDATED_AT = "updatedAt";
-    const DELETED_AT = "deletedAt";
 
     public function posts()
     {

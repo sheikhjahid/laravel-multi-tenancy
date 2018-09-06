@@ -19,25 +19,18 @@ use App\System\Models\User as SystemUser;
 
 Route::group(['middleware' => 'tenant_database_name'], function()
 {
-	Route::get('customers/{database}','SystemController@getTenantData');
+	Route::get('customers/{database}','SystemController@getUserData');
 
-	Route::get('deletecustomers/{database}/{id}','SystemController@deleteTenantData');
-	Route::get('customers/{database}/{id}','SystemController@getSpecificCustomerData');
-	Route::get('getCustomersByPosts/{database}/{id}','SystemController@getUserByPost');
+	Route::get('customers/{database}/{id}','SystemController@getUserById');
 
-	Route::post('createUser/{database}','SystemController@createCustomers');
+	Route::get('createUsers/{database}','SystemController@createCustomers');
+	Route::post('updateCustomers/{database}/{id}','SystemController@updateCustomers');
 
-	Route::get('posts/{database}','SystemController@getPostData');
+	Route::get('deleteCustomers/{database}/{id}','SystemController@deleteCustomers');
 
-	Route::get('deleteposts/{database}/{id}','SystemController@deletePosts');
+	Route::get('posts/{database}','SystemController@getAllPosts');
+	Route::get('posts/{database}/{id}','SystemController@getPostsById');
 
-	Route::get('posts/{database}/{id}','SystemController@getPostById');
-
-	Route::post('createPosts/{database}', 'SystemController@createPosts');
-
-	Route::post('updateUsers/{database}/{id}','SystemController@updateUsers');
-
-	Route::post('updatePosts/{database}/{id}','SystemController@updatePosts');
 
 
 });	
